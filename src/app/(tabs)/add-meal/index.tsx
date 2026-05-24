@@ -1,5 +1,6 @@
 import { addMeal, getMeals } from "@/src/storage/meals";
 import { colors, globalStyles } from "@/src/styles/global";
+import * as Haptics from "expo-haptics";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import {
@@ -42,6 +43,8 @@ export default function AddMealScreen() {
     setProtein("");
     setCarbs("");
     setFat("");
+
+    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
 
     Alert.alert("Success", "Meal added successfully!");
 
