@@ -14,6 +14,11 @@ export default function AllMealsScreen() {
   };
 
   const handleClearAll = async () => {
+    if (meals.length === 0) {
+      Alert.alert("There are not meals registered yet");
+      return;
+    }
+
     Alert.alert(
       "Delete all meals",
       "Are you sure you want to delete all meals?",
