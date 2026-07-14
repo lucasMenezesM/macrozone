@@ -1,11 +1,12 @@
 import { addMeal, getMeals, Meal } from "@/src/storage/meals";
 import { useFocusEffect } from "expo-router";
 import { useCallback, useState } from "react";
-import { Alert, ScrollView, Text, TouchableOpacity } from "react-native";
+import { Alert, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { globalStyles } from "../../styles/global";
 import HomeHeader from "../components/HomeScreen/HomeHeader";
 import MacroGrid from "../components/HomeScreen/MacroGrid";
 import RecentMeals from "../components/HomeScreen/RecentMeals";
+import ShareButton from "../components/ui/ShareButton";
 
 export default function HomeScreen() {
   const [meals, setMeals] = useState<Meal[]>([]);
@@ -36,7 +37,10 @@ export default function HomeScreen() {
 
   return (
     <ScrollView style={globalStyles.container}>
-      <Text style={globalStyles.title}>MacroZone</Text>
+      <View style={globalStyles.header}>
+        <Text style={globalStyles.title}>MacroZone</Text>
+        <ShareButton meals={meals} />
+      </View>
       <TouchableOpacity onPress={() => handleAddMealTest()}>
         <Text
           style={{

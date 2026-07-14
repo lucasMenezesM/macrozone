@@ -2,7 +2,14 @@ import { clearAllMeals, getMeals, Meal } from "@/src/storage/meals";
 import { globalStyles } from "@/src/styles/global";
 import { useFocusEffect } from "expo-router";
 import { useCallback, useState } from "react";
-import { Alert, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import {
+  Alert,
+  Platform,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import MealItem from "../../components/HomeScreen/MealItem";
 
 export default function AllMealsScreen() {
@@ -19,10 +26,18 @@ export default function AllMealsScreen() {
       return;
     }
 
-    Alert.alert(
-      "Delete all meals",
-      "Are you sure you want to delete all meals?",
-      [
+    const message = "Are you sure you want to delete all meals?";
+
+    if (Platform.OS === "web") {
+      // Código para o Navegador no PC
+      const confirmed = window.confirm(message);
+      if (confirmed) {
+        clearAllMeals();
+        loadMeals();
+      }
+    } else {
+      // Código para o Celular (Android/iOS)
+      Alert.alert("Delete all meals", message, [
         {
           text: "delete all",
           style: "destructive",
@@ -33,10 +48,10 @@ export default function AllMealsScreen() {
         },
         {
           text: "cancel",
-          style: "destructive",
+          style: "cancel",
         },
-      ],
-    );
+      ]);
+    }
   };
 
   useFocusEffect(
